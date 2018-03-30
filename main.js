@@ -1,5 +1,14 @@
+const placeholders = [
+    "https://myfriend.rocks",
+    "https://friendsarethe.best",
+    "https://thisfriendis.cool"
+];
+
 const frownFace = "&#9785;";
 const smileFace = "&#9786;";
+
+var handleInputTypeTimeout;
+var currentLink;
 
 function validURL(str,validLinks) {
     var reason = "All good!";
@@ -7,9 +16,7 @@ function validURL(str,validLinks) {
         reason = "Link must start with 'https://' or 'http://'.";
     else if (typeof validate({website:str}, {website: {url: true}}) != "undefined")
         reason = "Link is invalid, please check it again.";
-    else if (validLinks.indexOf(str) > -1)
-        reason = "Duplicate link!";
-
+    else if (validLinks.indexOf(str) > -1) reason = "Duplicate link!";
     result = (reason == "All good!");
     return {result:result,reason:reason};
 }
@@ -21,11 +28,7 @@ function goToFriend() {
     document.getElementById("apiLink").click();
 }
 
-function checkQuery() {
-    return (window.location.href.indexOf("?links=") > -1);
-}
-
-var handleInputTypeTimeout;
+function checkQuery() {return (window.location.href.indexOf("?links=") > -1);}
 
 function checkInputs() {
     var inputs = document.getElementsByTagName("input");
@@ -67,7 +70,6 @@ function handleDeleteListItem(ev) {
 
 function handleAddListItem() {
     var list = document.getElementById("list");
-    console.log(list);
     var newLI = newListItem()
     list.appendChild(newLI);
     newLI.getElementsByTagName("input")[0].focus();
@@ -76,9 +78,8 @@ function handleAddListItem() {
 
 function clearListItems() {
     var inputs = document.getElementsByTagName("input");
-    while (inputs.length > 0) {
+    while (inputs.length > 0)
         inputs[0].parentNode.parentNode.removeChild(inputs[0].parentNode);
-    }
     checkInputs();
 }
 
@@ -89,12 +90,6 @@ function newDelButton() {
     del.addEventListener("click",handleDeleteListItem);
     return del;
 }
-
-const placeholders = [
-    "https://myfriend.rocks",
-    "https://friendsarethe.best",
-    "https://thisfriendis.cool"
-];
 
 function newListItem() {
     var listItem = document.createElement("div");
@@ -117,8 +112,6 @@ function newListItem() {
     return listItem;
 }
 
-var currentLink;
-
 function fixLinkWidth() {
     var linkText = document.getElementById("link");
     var right = document.getElementsByClassName("right")[0];
@@ -138,9 +131,7 @@ function generateLink() {
         fixLinkWidth();
         this.innerHTML = "update link";
     }
-    else {
-        console.log("no links entered");
-    }
+    else {console.log("no links entered")}
 }
 
 function init() {
@@ -163,9 +154,5 @@ function init() {
     }
 }
 
-function resize() {
-    fixLinkWidth();
-}
-
 window.onload = init;
-window.onresize = resize;
+window.onresize = fixLinkWidth;
