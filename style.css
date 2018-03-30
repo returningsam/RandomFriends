@@ -222,6 +222,7 @@ input {
     display: flex;
     flex-direction: row;
     max-width: calc(100% - 50px);
+    height: calc(100% + 18px);
 }
 
 .linkCont p {
