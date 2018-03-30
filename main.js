@@ -1,14 +1,21 @@
 const frownFace = "&#9785;";
 const smileFace = "&#9786;";
 
-function validURL(str) {
-    var result = validate({website:str}, {website: {url: true}});
-    return (typeof result == "undefined");
+function validURL(str,validLinks) {
+    var reason = "All good!";
+    if (!RegExp(/^(https:\/\/|http:\/\/)+/).test(str))
+        reason = "Link must start with 'https://' or 'http://'.";
+    else if (typeof validate({website:str}, {website: {url: true}}) != "undefined")
+        reason = "Link is invalid, please check it again.";
+    else if (validLinks.indexOf(str) > -1)
+        reason = "Duplicate link!";
+
+    result = (reason == "All good!");
+    return {result:result,reason:reason};
 }
 
 function goToFriend() {
     var urls = window.location.href.split("?")[1].replace("links=","").split(",");
-    console.log(urls);
     var fLink = decodeURIComponent(urls.splice(chance.integer({min:0,max:urls.length-1}),1)[0]);
     document.getElementById("apiLink").href = fLink;
     document.getElementById("apiLink").click();
@@ -32,11 +39,13 @@ function checkInputs() {
             i--;
         }
         else {
-            if (validURL(inputs[i].value) && validLinks.indexOf(inputs[i].value) < 0) {
+            var validity = validURL(inputs[i].value,validLinks);
+            if (validity.result) {
                 validLinks.push(inputs[i].value);
                 inputs[i].parentNode.getElementsByClassName("status")[0].innerHTML = smileFace;
             }
             else inputs[i].parentNode.getElementsByClassName("status")[0].innerHTML = frownFace;
+            inputs[i].parentNode.getElementsByClassName("status")[0].title = validity.reason;
         }
     }
     if (validLinks.length > 0)
@@ -96,7 +105,6 @@ function newListItem() {
     inp.placeholder = placeholders[chance.integer({min:0,max:placeholders.length-1})];
     inp.addEventListener("input",handleInputType);
     inp.addEventListener("keypress",function (ev) {
-        console.log(ev.key == "Enter");
         if (ev.key == "Enter") handleAddListItem();
     })
     listItem.appendChild(inp);
