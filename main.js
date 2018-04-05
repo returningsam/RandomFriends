@@ -12,9 +12,7 @@ var currentLink;
 
 function validURL(str,validLinks) {
     var reason = "All good!";
-    if (!RegExp(/^(https:\/\/|http:\/\/)+/).test(str))
-        reason = "Link must start with 'https://' or 'http://'.";
-    else if (typeof validate({website:str}, {website: {url: true}}) != "undefined")
+    if (typeof validate({website:str}, {website: {url: true}}) != "undefined")
         reason = "Link is invalid, please check it again.";
     else if (validLinks.indexOf(str) > -1) reason = "Duplicate link!";
     result = (reason == "All good!");
@@ -42,8 +40,10 @@ function checkInputs() {
             i--;
         }
         else {
-            inputs[i].value = inputs[i].value.replace(/https:\/\/|http:\/\//gi, "");
-            console.log(inputs[i].value.replace(/https:\/\/|http:\/\//gi, ""));
+            if (!RegExp(/^(https:\/\/|http:\/\/)+/).test(str))
+                if ("https://".indexOf(inputs[i].value) > -1 || "http://".indexOf(inputs[i].value) > -1)
+                    inputs[i].value = "http://" +inputs[i].value;
+
             var validity = validURL("http://" + inputs[i].value,validLinks);
             if (validity.result) {
                 validLinks.push(inputs[i].value);
