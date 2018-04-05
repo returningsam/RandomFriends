@@ -40,7 +40,7 @@ function checkInputs() {
             i--;
         }
         else {
-            if (!RegExp(/^(https:\/\/|http:\/\/)+/).test(str))
+            if (!RegExp(/^(https:\/\/|http:\/\/)+/).test(inputs[i].value))
                 if ("https://".indexOf(inputs[i].value) > -1 || "http://".indexOf(inputs[i].value) > -1)
                     inputs[i].value = "http://" +inputs[i].value;
 
