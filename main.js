@@ -109,10 +109,11 @@ function newListItem() {
     listItem.classList.add("listItem");
 
     var inp = document.createElement("input");
-    inp.type = "text";
+    inp.type = "url";
+    inp.autocomplete = "on";
     inp.placeholder = placeholders[chance.integer({min:0,max:placeholders.length-1})];
     inp.addEventListener("input",handleInputType);
-    inp.addEventListener("input",attemptAutoFill);
+    // inp.addEventListener("input",attemptAutoFill);
     inp.addEventListener("keypress",function (ev) {
         if (ev.key == "Enter") handleAddListItem();
     })
