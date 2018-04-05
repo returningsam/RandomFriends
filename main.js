@@ -34,7 +34,11 @@ function attemptAutoFill(ev) {
     if (autoFillTimeout) clearTimeout(autoFillTimeout);
     autoFillTimeout = setTimeout(function () {
         var inputEl = ev.target;
-        if (autoFilled || inputEl.value.length < 1) return;
+        if (autoFilled) return;
+        if (inputEl.value.length < 1) {
+            autoFilled = false;
+            return;
+        }
         if (!RegExp(/^(https:\/\/|http:\/\/)+/).test(inputEl.value)) {
             if ("https://".indexOf(inputEl.value) > -1 || "http://".indexOf(inputEl.value) > -1)
                 inputEl.value = "http://";
