@@ -28,6 +28,13 @@ function goToFriend() {
 
 function checkQuery() {return (window.location.href.indexOf("?links=") > -1);}
 
+function attemptAutoFill(ev) {
+    var inputEl = ev.target;
+    if (!RegExp(/^(https:\/\/|http:\/\/)+/).test(inputEl.value))
+        if ("https://".indexOf(inputEl.value) > -1 || "http://".indexOf(inputEl.value) > -1)
+            inputEl.value = "http://" +inputEl.value;
+}
+
 function checkInputs() {
     var inputs = document.getElementsByTagName("input");
     if (inputs.length > 0)
@@ -40,10 +47,6 @@ function checkInputs() {
             i--;
         }
         else {
-            if (!RegExp(/^(https:\/\/|http:\/\/)+/).test(inputs[i].value))
-                if ("https://".indexOf(inputs[i].value) > -1 || "http://".indexOf(inputs[i].value) > -1)
-                    inputs[i].value = "http://" +inputs[i].value;
-
             var validity = validURL("http://" + inputs[i].value,validLinks);
             if (validity.result) {
                 validLinks.push(inputs[i].value);
@@ -101,6 +104,7 @@ function newListItem() {
     inp.type = "text";
     inp.placeholder = placeholders[chance.integer({min:0,max:placeholders.length-1})];
     inp.addEventListener("input",handleInputType);
+    inp.addEventListener("change",attemptAutoFill);
     inp.addEventListener("keypress",function (ev) {
         if (ev.key == "Enter") handleAddListItem();
     })
