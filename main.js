@@ -32,9 +32,11 @@ var autoFilled = false;
 function attemptAutoFill(ev) {
     var inputEl = ev.target;
     if (autoFilled || inputEl.value.length < 1) return;
-    if (!RegExp(/^(https:\/\/|http:\/\/)+/).test(inputEl.value))
+    if (!RegExp(/^(https:\/\/|http:\/\/)+/).test(inputEl.value)) {
         if ("https://".indexOf(inputEl.value) > -1 || "http://".indexOf(inputEl.value) > -1)
-            inputEl.value = "http://" +inputEl.value;
+            inputEl.value = "http://";
+        else inputEl.value = "http://" + inputEl.value;
+    }
 }
 
 function checkInputs() {
