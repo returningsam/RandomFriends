@@ -1,7 +1,7 @@
 const placeholders = [
-    "myfriend.rocks",
-    "friendsarethe.best",
-    "thisfriendis.cool"
+    "http://myfriend.rocks",
+    "http://friendsarethe.best",
+    "http://thisfriendis.cool"
 ];
 
 const frownFace = "&#9785;";
@@ -34,11 +34,11 @@ function attemptAutoFill(ev) {
     if (autoFillTimeout) clearTimeout(autoFillTimeout);
     autoFillTimeout = setTimeout(function () {
         var inputEl = ev.target;
-        if (autoFilled) return;
         if (inputEl.value.length < 1) {
             autoFilled = false;
             return;
         }
+        if (autoFilled) return;
         if (!RegExp(/^(https:\/\/|http:\/\/)+/).test(inputEl.value)) {
             if ("https://".indexOf(inputEl.value) > -1 || "http://".indexOf(inputEl.value) > -1)
                 inputEl.value = "http://";
