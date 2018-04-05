@@ -45,7 +45,7 @@ function attemptAutoFill(ev) {
             else inputEl.value = "http://" + inputEl.value;
             autoFilled = true;
         }
-    }, 500);
+    }, 300);
 }
 
 function checkInputs() {
