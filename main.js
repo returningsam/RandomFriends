@@ -40,7 +40,7 @@ function attemptAutoFill(ev) {
                 inputEl.value = "http://";
             else inputEl.value = "http://" + inputEl.value;
         }
-    }, 100);
+    }, 500);
 }
 
 function checkInputs() {
