@@ -28,8 +28,10 @@ function goToFriend() {
 
 function checkQuery() {return (window.location.href.indexOf("?links=") > -1);}
 
+var autoFilled = false;
 function attemptAutoFill(ev) {
     var inputEl = ev.target;
+    if (autoFilled || inputEl.value.length < 1) return;
     if (!RegExp(/^(https:\/\/|http:\/\/)+/).test(inputEl.value))
         if ("https://".indexOf(inputEl.value) > -1 || "http://".indexOf(inputEl.value) > -1)
             inputEl.value = "http://" +inputEl.value;
@@ -104,7 +106,7 @@ function newListItem() {
     inp.type = "text";
     inp.placeholder = placeholders[chance.integer({min:0,max:placeholders.length-1})];
     inp.addEventListener("input",handleInputType);
-    inp.addEventListener("change",attemptAutoFill);
+    inp.addEventListener("input",attemptAutoFill);
     inp.addEventListener("keypress",function (ev) {
         if (ev.key == "Enter") handleAddListItem();
     })
