@@ -1,7 +1,7 @@
 const placeholders = [
-    "https://myfriend.rocks",
-    "https://friendsarethe.best",
-    "https://thisfriendis.cool"
+    "myfriend.rocks",
+    "friendsarethe.best",
+    "thisfriendis.cool"
 ];
 
 const frownFace = "&#9785;";
@@ -42,7 +42,8 @@ function checkInputs() {
             i--;
         }
         else {
-            var validity = validURL(inputs[i].value,validLinks);
+            inputs[i].value = inputs[i].value.replace(/https:\/\/,http:\/\//g, "")
+            var validity = validURL("http://" + inputs[i].value,validLinks);
             if (validity.result) {
                 validLinks.push(inputs[i].value);
                 inputs[i].parentNode.getElementsByClassName("status")[0].innerHTML = smileFace;
