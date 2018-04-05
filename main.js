@@ -42,7 +42,8 @@ function checkInputs() {
             i--;
         }
         else {
-            inputs[i].value = inputs[i].value.replace(/https:\/\/,http:\/\//g, "")
+            inputs[i].value = inputs[i].value.replace(/https:\/\/,http:\/\//gi, "");
+            console.log(inputs[i].value);
             var validity = validURL("http://" + inputs[i].value,validLinks);
             if (validity.result) {
                 validLinks.push(inputs[i].value);
