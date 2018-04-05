@@ -39,6 +39,7 @@ function attemptAutoFill(ev) {
             if ("https://".indexOf(inputEl.value) > -1 || "http://".indexOf(inputEl.value) > -1)
                 inputEl.value = "http://";
             else inputEl.value = "http://" + inputEl.value;
+            autoFilled = true;
         }
     }, 500);
 }
@@ -113,7 +114,7 @@ function newListItem() {
     inp.autocomplete = "on";
     inp.placeholder = placeholders[chance.integer({min:0,max:placeholders.length-1})];
     inp.addEventListener("input",handleInputType);
-    // inp.addEventListener("input",attemptAutoFill);
+    inp.addEventListener("input",attemptAutoFill);
     inp.addEventListener("keypress",function (ev) {
         if (ev.key == "Enter") handleAddListItem();
     })
