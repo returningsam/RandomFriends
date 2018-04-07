@@ -60,7 +60,7 @@ function checkInputs() {
             i--;
         }
         else {
-            var validity = validURL("http://" + inputs[i].value,validLinks);
+            var validity = validURL(inputs[i].value,validLinks);
             if (validity.result) {
                 validLinks.push(inputs[i].value);
                 inputs[i].parentNode.getElementsByClassName("status")[0].innerHTML = smileFace;
