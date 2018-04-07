@@ -6,6 +6,7 @@ const placeholders = [
 
 const frownFace = "&#9785;";
 const smileFace = "&#9786;";
+const neutrFace = "&#128528;";
 
 var handleInputTypeTimeout;
 var currentLink;
@@ -34,10 +35,7 @@ function attemptAutoFill(ev) {
     if (autoFillTimeout) clearTimeout(autoFillTimeout);
     autoFillTimeout = setTimeout(function () {
         var inputEl = ev.target;
-        if (inputEl.value.length < 1) {
-            autoFilled = false;
-            return;
-        }
+        if (inputEl.value.length < 1) return;
         if (autoFilled) return;
         if (!RegExp(/^(https:\/\/|http:\/\/)+/).test(inputEl.value)) {
             if ("https://".indexOf(inputEl.value) > -1 || "http://".indexOf(inputEl.value) > -1)
@@ -101,14 +99,6 @@ function clearListItems() {
     checkInputs();
 }
 
-function newDelButton() {
-    var del = document.createElement("p");
-    del.classList.add("inputDelButton");
-    del.innerHTML = frownFace;
-    del.addEventListener("click",handleDeleteListItem);
-    return del;
-}
-
 function newListItem() {
     var listItem = document.createElement("div");
     listItem.classList.add("listItem");
@@ -121,14 +111,13 @@ function newListItem() {
     inp.addEventListener("input",attemptAutoFill);
     inp.addEventListener("keypress",function (ev) {
         if (ev.key == "Enter") handleAddListItem();
-    })
+    });
     listItem.appendChild(inp);
 
     var status = document.createElement("p");
     status.classList.add("status");
-    status.innerHTML = frownFace;
+    status.innerHTML = neutrFace;
     listItem.appendChild(status);
-
     return listItem;
 }
 
